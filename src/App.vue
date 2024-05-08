@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<SearchBar @eseguiRicerca="callbackEseguiRicerca" />
-		<Main :movies="movieArray" />
+		<Main :movies="movieArray" :tvSeries="tvArray" />
 	</div>
 </template>
 
@@ -18,16 +18,21 @@ export default {
 	},
   data() {
     return {
-      baseURLMovie: "https://api.themoviedb.org/3/search/movie",
+      baseURL: "https://api.themoviedb.org/3/search",
       store,
       movieArray: [],
+      tvArray: [],
     }
   },
   methods: {
     callbackEseguiRicerca(searchText) {
-      axios.get(this.baseURLMovie + `?api_key=${store.apiKey}&query=${searchText}`)
+      axios.get(this.baseURL + `/movie?api_key=${store.apiKey}&query=${searchText}`)
         .then((response) => {
           this.movieArray = response.data.results
+        })
+      axios.get(this.baseURL + `/tv?api_key=${store.apiKey}&query=${searchText}`)
+        .then((response) => {
+          this.tvArray = response.data.results
         })
     }
   }
