@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="input-group my-3 w-50 mx-auto">
-			<input v-model="searchText" type="text" class="form-control" placeholder="Cerca film o serie TV" />
+			<input v-model="store.searchText" type="text" class="form-control" placeholder="Cerca film o serie TV" />
 			<button @click="searchMovie" class="btn btn-outline-primary" type="button">
 				<i class="fa-solid fa-magnifying-glass"></i>
 			</button>
@@ -10,18 +10,19 @@
 </template>
 
 <script>
+import { store } from '../store';
 export default {
 	data() {
 		return{
-			searchText: "",
+			store,
 		}
 	},
 	methods: {
 		searchMovie(){
-			if(this.searchText === ""){
+			if(store.searchText === ""){
 				return
 			}
-			this.$emit("eseguiRicerca", this.searchText);
+			this.$emit("eseguiRicerca",);
 		}
 	}
 };

@@ -1,41 +1,40 @@
 <template>
 	<div>
 		<SearchBar @eseguiRicerca="callbackEseguiRicerca" />
-		<Main :movies="movieArray" :tvSeries="tvArray" />
+		<Main />
 	</div>
 </template>
 
 <script>
 import axios from "axios";
 import SearchBar from "./components/SearchBar.vue";
-import Main from "./components/Main.vue"
-import { store } from "./store.js"
+import Main from "./components/Main.vue";
+import { store } from "./store.js";
 export default {
 	components: {
 		SearchBar,
-    Main,
-
+		Main,
 	},
-  data() {
-    return {
-      baseURL: "https://api.themoviedb.org/3/search",
-      store,
-      movieArray: [],
-      tvArray: [],
-    }
-  },
-  methods: {
-    callbackEseguiRicerca(searchText) {
-      axios.get(this.baseURL + `/movie?api_key=${store.apiKey}&query=${searchText}`)
-        .then((response) => {
-          this.movieArray = response.data.results
-        })
-      axios.get(this.baseURL + `/tv?api_key=${store.apiKey}&query=${searchText}`)
-        .then((response) => {
-          this.tvArray = response.data.results
-        })
-    }
-  }
+	data() {
+		return {
+			baseURL: "https://api.themoviedb.org/3/search",
+			store,
+		};
+	},
+	methods: {
+		callbackEseguiRicerca() {
+			axios
+				.get(this.baseURL + `/movie?api_key=${store.apiKey}&query=${store.searchText}`)
+				.then((response) => {
+					store.movies = response.data.results;
+				});
+			axios
+				.get(this.baseURL + `/tv?api_key=${store.apiKey}&query=${store.searchText}`)
+				.then((response) => {
+					store.series = response.data.results;
+				});
+		},
+	},
 };
 </script>
 

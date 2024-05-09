@@ -2,7 +2,7 @@
 	<main>
 		<h1 class="text-center">Movies</h1>
 		<div class="d-flex flex-wrap">
-			<div class="my-card m-2 p-2" v-for="movie in movies">
+			<div class="my-card m-2 p-2" v-for="movie in store.movies">
 				<p>Titolo: {{ movie.title }}</p>
 				<p>Titolo originale: {{ movie.original_title }}</p>
 				<div>
@@ -22,10 +22,10 @@
 		</div>
 		<h1 class="text-center">Tv series</h1>
 		<div class="d-flex flex-wrap">
-			<div class="my-card m-2 p-2" v-for="tvSerie in tvSeries">
+			<div class="my-card m-2 p-2" v-for="tvSerie in store.series">
 				<p>Titolo: {{ tvSerie.name }}</p>
 				<p>Titolo originale: {{ tvSerie.original_name }}</p>
-				<img :src="URLImage + tvSerie.poster_path" alt="" />
+
 				<div>
 					Linuga:
 					<span v-if="!flags.includes(tvSerie.original_language)">{{ tvSerie.original_language }}</span>
@@ -37,21 +37,19 @@
 					Voto:
 					<i v-for="index in formatNumber(tvSerie.vote_average)" class="fa-solid fa-star"></i>
 					<i v-for="index in 5 - formatNumber(tvSerie.vote_average)" class="fa-regular fa-star"></i>
-					<!-- {{ formatNumber(tvSerie.vote_average) }} -->
 				</p>
+				<img :src="URLImage + tvSerie.poster_path" alt="" />
 			</div>
 		</div>
 	</main>
 </template>
 
 <script>
+import { store } from "../store";
 export default {
-	props: {
-		movies: Array,
-		tvSeries: Array,
-	},
 	data() {
 		return {
+			store,
 			flags: ["de", "en", "es", "fr", "it", "ja", "nl", "pl"],
 			URLImage: "https://image.tmdb.org/t/p/w342/",
 		};
