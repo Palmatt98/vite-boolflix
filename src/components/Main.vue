@@ -12,7 +12,12 @@
 						<img :src="getFlagImg(movie.original_language)" alt="" />
 					</div>
 				</div>
-				<p>Voto: {{ movie.vote_average }}</p>
+
+				<p>
+					Voto: <i v-for="index in formatNumber(movie.vote_average)" class="fa-solid fa-star"></i>
+					<i v-for="index in 5 - formatNumber(movie.vote_average)" class="fa-regular fa-star"></i>
+				</p>
+				<img :src="URLImage + movie.poster_path" alt="" />
 			</div>
 		</div>
 		<h1 class="text-center">Tv series</h1>
@@ -20,6 +25,7 @@
 			<div class="my-card m-2 p-2" v-for="tvSerie in tvSeries">
 				<p>Titolo: {{ tvSerie.name }}</p>
 				<p>Titolo originale: {{ tvSerie.original_name }}</p>
+				<img :src="URLImage + tvSerie.poster_path" alt="" />
 				<div>
 					Linuga:
 					<span v-if="!flags.includes(tvSerie.original_language)">{{ tvSerie.original_language }}</span>
@@ -27,7 +33,12 @@
 						<img :src="getFlagImg(tvSerie.original_language)" alt="" />
 					</div>
 				</div>
-				<p>Voto: {{ tvSerie.vote_average }}</p>
+				<p>
+					Voto:
+					<i v-for="index in formatNumber(tvSerie.vote_average)" class="fa-solid fa-star"></i>
+					<i v-for="index in 5 - formatNumber(tvSerie.vote_average)" class="fa-regular fa-star"></i>
+					<!-- {{ formatNumber(tvSerie.vote_average) }} -->
+				</p>
 			</div>
 		</div>
 	</main>
@@ -42,11 +53,15 @@ export default {
 	data() {
 		return {
 			flags: ["de", "en", "es", "fr", "it", "ja", "nl", "pl"],
+			URLImage: "https://image.tmdb.org/t/p/w342/",
 		};
 	},
 	methods: {
 		getFlagImg(lang) {
 			return new URL(`../assets/img/${lang}.png`, import.meta.url).href;
+		},
+		formatNumber(num) {
+			return Math.round(num / 2);
 		},
 	},
 };
