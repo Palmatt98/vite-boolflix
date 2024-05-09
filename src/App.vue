@@ -1,6 +1,11 @@
 <template>
 	<div>
-		<SearchBar @eseguiRicerca="callbackEseguiRicerca" />
+    <header class="px-4">
+      <div class="logo">
+        <h1>BOOLFLIX</h1>
+      </div>
+      <SearchBar @eseguiRicerca="callbackEseguiRicerca" />
+    </header>
 		<Main />
 	</div>
 </template>
@@ -38,4 +43,15 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+header {
+  height: 80px;
+  background-color: black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .logo{
+    color: red;
+  }
+}
+</style>
