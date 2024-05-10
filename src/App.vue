@@ -1,11 +1,11 @@
 <template>
 	<div>
-    <header class="px-4">
-      <div class="logo">
-        <h1>BOOLFLIX</h1>
-      </div>
-      <SearchBar @eseguiRicerca="callbackEseguiRicerca" />
-    </header>
+		<header class="px-4">
+			<div class="logo">
+				<h1>BOOLFLIX</h1>
+			</div>
+			<SearchBar @eseguiRicerca="callbackEseguiRicerca" />
+		</header>
 		<Main />
 	</div>
 </template>
@@ -19,6 +19,7 @@ export default {
 	components: {
 		SearchBar,
 		Main,
+		
 	},
 	data() {
 		return {
@@ -45,13 +46,13 @@ export default {
 
 <style lang="scss" scoped>
 header {
-  height: 80px;
-  background-color: black;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  .logo{
-    color: red;
-  }
+	height: 80px;
+	background-color: black;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	.logo {
+		color: red;
+	}
 }
 </style>
