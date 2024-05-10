@@ -2,11 +2,18 @@
 	<main>
 		<h1 class="text-center">Movies</h1>
 		<div class="d-flex flex-wrap">
-			<CardMovie v-for="movie in store.movies" :movie="movie" />
+			<CardMovie
+				v-for="movie in store.movies"
+				@mouseenter="getCastAndGenre('movie', movie.id)"
+				@mouseleave="resetCastAndGenre"
+				:movie="movie"
+				:cast="castArray"
+				:genres="genreArray"
+			/>
 		</div>
 		<h1 class="text-center">Tv series</h1>
 		<div class="d-flex flex-wrap">
-			<CardSerie  v-for="tvSerie in store.series" :tvSerie="tvSerie"/>
+			<CardSerie @mouseenter="getCastAndGenre('tv')" v-for="tvSerie in store.series" :tvSerie="tvSerie" />
 		</div>
 	</main>
 </template>
@@ -15,6 +22,7 @@
 import { store } from "../store";
 import CardMovie from "./CardMovie.vue";
 import CardSerie from "./CardSerie.vue";
+import axios from "axios";
 
 export default {
 	components: {
@@ -24,9 +32,30 @@ export default {
 	data() {
 		return {
 			store,
+			baseURL: "https://api.themoviedb.org/3/",
+			castArray: [],
+			genreArray: [],
 		};
 	},
-	methods: {},
+	methods: {
+		getCastAndGenre(cardType, id) {
+			axios
+				.get(this.baseURL + cardType + "/" + id + "?append_to_response=credits&api_key=" + store.apiKey)
+				.then((response) => {
+					const cast = response.data.credits.cast;
+					for (let i = 0; i < 5; i++) {
+						this.castArray.push(cast[i]);
+					}
+					console.log("this.castArray:", this.castArray);
+					this.genreArray = response.data.genres;
+					console.log("this.genreArray:", this.genreArray);
+				});
+		},
+		resetCastAndGenre() {
+			this.castArray = [];
+			this.genreArray = [];
+		},
+	},
 };
 </script>
 

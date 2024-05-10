@@ -20,6 +20,17 @@
 					Voto: <i v-for="index in formatNumber(movie.vote_average)" class="fa-solid fa-star"></i>
 					<i v-for="index in 5 - formatNumber(movie.vote_average)" class="fa-regular fa-star"></i>
 				</p>
+				<ul>
+					<p>Cast:</p>
+					<li v-for="item in cast">
+						{{ item !== undefined ? item.name : null }}
+					</li>
+					<p>Generi:</p>
+					<li v-for="item in genres">
+						{{ item !== undefined ? item.name : null }}
+					</li>
+					
+				</ul>
 			</div>
 		</div>
 	</div>
@@ -29,6 +40,8 @@
 export default {
 	props: {
 		movie: Object,
+		cast: Array,
+		genres: Array,
 	},
 	data(){
 		return {
